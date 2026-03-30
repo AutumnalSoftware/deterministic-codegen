@@ -70,3 +70,4 @@ Each template generates a specific part of the system:
 ---
 
 ## Running the Generator
+``` ./generator.py ```
