@@ -71,3 +71,27 @@ Each template generates a specific part of the system:
 
 ## Running the Generator
 ``` ./generator.py ```
+
+
+Generated files will appear in the `output/` directory.
+
+---
+
+## Notes
+
+- Generated files are not committed to the repository.
+- The generator is intentionally simple and explicit.
+- Templates are responsible for how the system is implemented.
+- The model defines what exists and how it is connected.
+
+---
+
+## Purpose
+
+This example demonstrates a deterministic approach to code generation:
+
+- The model describes the system at a high level
+- The generator produces consistent, repeatable output
+- The structure of the system is defined by the model, not handwritten code
+
+This repository accompanies a book on deterministic code generation and system design.
