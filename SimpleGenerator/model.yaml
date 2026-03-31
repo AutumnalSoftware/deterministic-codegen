@@ -1,0 +1,19 @@
+output: built
+
+measurements:
+  - Temperature
+  - Humidity
+
+queues:
+  - TemperatureQueue
+
+stages:
+  - TemperatureSensor
+  - Logger
+
+connections:
+  - from: TemperatureSensor
+    to: TemperatureQueue
+
+  - from: TemperatureQueue
+    to: Logger
