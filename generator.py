@@ -18,89 +18,32 @@ def validate_model(model):
         if dst not in stages and dst not in queues:
             raise ValueError(f"Unknown destination: {dst}")
 
-
-def render_measurements(model, output_dir):
-    # Prepare the Jinja2 environment and load the template
-    env = Environment(loader=FileSystemLoader('templates'),
-            trim_blocks=True,
-            lstrip_blocks=True)
-    template = env.get_template('measurements.h.j2')
-
-    # Render the template with data from the YAML file
-    output = template.render(model=model)
-
-    # Save the rendered output to a file
-    #with open('output/measurements.h', 'w') as cpp_file:
-    with open(output_dir / 'measurements.h', 'w') as cpp_file:
-        cpp_file.write(output)
-
-    print("Generated measurements.h successfully.")
-
-def render_queues(model, output_dir):
-    # Prepare the Jinja2 environment and load the template
-    env = Environment(loader=FileSystemLoader('templates'),
-            trim_blocks=True,
-            lstrip_blocks=True)
-    template = env.get_template('queues.h.j2')
-
-    # Render the template with data from the YAML file
-    #output = template.render(queues=model['queues'])
-    output = template.render(model=model)
-
-    # Save the rendered output to a file
-    with open(output_dir / 'queues.h', 'w') as cpp_file:
-        cpp_file.write(output)
-
-    print("Generated queues.h successfully.")
-
-def render_stages(model, output_dir):
-    # Prepare the Jinja2 environment and load the template
-    env = Environment(loader=FileSystemLoader('templates'),
-            trim_blocks=True,
-            lstrip_blocks=True)
-    template = env.get_template('stages.h.j2')
-
-    # Render the template with data from the YAML file
-    output = template.render(model=model)
-
-    # Save the rendered output to a file
-    with open(output_dir / 'stages.h', 'w') as cpp_file:
-        cpp_file.write(output)
-
-    print("Generated stages.h successfully.")
-
-def render_pipelines(model, output_dir):
-    # Prepare the Jinja2 environment and load the template
-    env = Environment(loader=FileSystemLoader('templates'),
-            trim_blocks=True,
-            lstrip_blocks=True)
-    template = env.get_template('pipelines.h.j2')
-
-    # Render the template with data from the YAML file
-    output = template.render(model=model)
-
-    # Save the rendered output to a file
-    with open(output_dir / 'pipeline.h', 'w') as cpp_file:
-        cpp_file.write(output)
-
-    print("Generated pipeline.h successfully.")
-
 def main():
     # Load the YAML file
     with open('model.yaml', 'r') as yaml_file:
         model = yaml.safe_load(yaml_file)
     validate_model(model)
 
+    env = Environment(loader=FileSystemLoader('templates'),
+            trim_blocks=True,
+            lstrip_blocks=True)
+
     output_dir = Path(model.get('output', 'generated'))
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    render_measurements(model, output_dir)
+    files_to_generate = [
+        ('measurements.h.j2', output_dir / 'measurements.h'),
+        ('queues.h.j2', output_dir / 'queues.h'),
+        ('stages.h.j2', output_dir / 'stages.h'),
+        ('pipelines.h.j2', output_dir / 'pipeline.h'),
+    ]
 
-    render_queues(model, output_dir)
+    for template_name, output_path in files_to_generate:
+        template = env.get_template(template_name)
+        output = template.render(model=model)
 
-    render_stages(model, output_dir)
-
-    render_pipelines(model, output_dir)
+        with open(output_path, 'w') as f:
+            f.write(output)
 
 if  __name__ == "__main__":
     main();
