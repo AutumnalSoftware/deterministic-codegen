@@ -1,6 +1,6 @@
 # Deterministic Code Generation Example
 
-This is the companion code for the book "Raising the Level of Abstraction: Deterministic Code Generator for C++"
+This is the companion code for the upcoming book "Raising the Level of Abstraction: Deterministic Code Generator for C++"
 
 This repository contains a minimal example of deterministic code generation using a YAML-based DSL and Jinja2 templates.
 
