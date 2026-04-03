@@ -27,3 +27,10 @@ The generated code is intended to look exactly like what you would write by hand
 
 ```bash
 ./generator.py
+```
+
+This reads model.yaml and generates output files in:
+
+```
+generated/
+```
