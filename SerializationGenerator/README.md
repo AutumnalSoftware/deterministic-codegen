@@ -4,7 +4,7 @@ This generator produces C++ measurement types and Binary Data Stream (BDS) seria
 
 It is part of the examples from:
 
-**Raising the Level of Abstraction: Deterministic Code Generation for C++**
+[**Raising the Level of Abstraction: Deterministic Code Generation for C++**](https://leanpub.com/raisingthelevelofabstraction)
 
 ---
 
