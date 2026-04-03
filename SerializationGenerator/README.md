@@ -55,3 +55,96 @@ Each measurement:
 each field defines:
 - type
 - serialization functions
+
+Generated Output
+
+The generator produces:
+
+generated/
+├── MeasurementTypes.h
+├── BdsMeasurementCodecs.h
+├── BdsMeasurementCodecs.cpp
+├── MeasurementIO.h
+├── MeasurementIO.cpp
+MeasurementTypes.h
+
+Plain C++ value types:
+
+struct Temperature
+{
+    double value{};
+};
+BdsMeasurementCodecs
+
+Explicit serialization functions:
+
+BinaryWriteStream& writeTemperature(BinaryWriteStream& stream,
+                                    const Temperature& measurement) noexcept
+{
+    stream.writeDouble(measurement.value);
+    return stream;
+}
+MeasurementIO
+
+Debug/logging support:
+
+std::ostream& operator<<(std::ostream& os, const Temperature& value)
+{
+    os << "Temperature{value=" << value.value << "}";
+    return os;
+}
+Design Philosophy
+
+This generator is intentionally:
+
+- simple
+- explicit
+- deterministic
+
+It does not:
+
+- introduce a runtime system
+- interpret schemas dynamically
+- hide behavior behind abstraction layers
+
+Instead, it produces:
+
+Plain C++ code that becomes part of your system
+
+Why This Exists
+
+Many parts of embedded and systems software are:
+
+- repetitive
+- mechanical
+- error-prone
+
+Examples:
+
+- data types
+- serialization code
+- logging/debugging output
+
+This generator removes that repetition while preserving:
+
+- control
+- clarity
+- performance
+- analyzability
+- Relationship to Other Generators
+
+This repository also contains a simpler generator (simplegenerator) that
+produces system structure (pipelines, queues, stages).
+
+This generator focuses only on:
+
+- data types
+- serialization
+- debugging support
+
+Generators are intentionally kept small and focused.
+
+Notes
+The YAML format is a convenience, not the abstraction itself
+The model represents system concepts, not C++ constructs
+The generator is deterministic: same input → same output
