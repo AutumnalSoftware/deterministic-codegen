@@ -6,6 +6,8 @@ This project is about something else:
 
 **preserving architecture.**
 
+My book ["Raising the Level of Abstraction"](https://leanpub.com/raisingthelevelofabstraction) provides all the details.
+
 ---
 
 ## The Problem
